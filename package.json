@@ -1,0 +1,15 @@
+{
+  "name": "states-of-the-union",
+  "version": "0.0.1",
+  "author": "chao",
+  "private": true,
+  "scripts": {
+    "start": "node server"
+  },
+  "dependencies": {
+    "express": "*",
+    "node-fetch": "^2.1.2",
+    "socket.io": "*",
+    "twitter": "*"
+  }
+}
