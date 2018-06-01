@@ -66,7 +66,7 @@ const states = new Object()
   states.WY = 56;
 
 socket.on('twitter-stream', function (data) {
-  state_map_array[states[data.state]] += 0.1
+  state_map_array[states[data.state]] += 0.01
 });
 
 // Listens for a success response from the server to
@@ -81,7 +81,6 @@ socket.on("connected", function(r) {
 
 // import {apiCall} from './twitter.js';
 document.addEventListener('DOMContentLoaded', () => {
-
  // Ratio of Obese (BMI >= 30) in U.S. Adults, CDC 2008
  // var valueById = [
  //   NaN, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00,  NaN, 0.00, 0.00,
@@ -93,39 +92,43 @@ document.addEventListener('DOMContentLoaded', () => {
  // ];
  // console.log(state_map_array);
  // var valueById = state_map_array
- console.log(state_map_array);
-
- var path = d3.geo.path();
-
- var svg = d3.select("body").append("svg")
-     .attr("width", 960)
-     .attr("height", 500);
-
- d3.json("/map", function(error, us) {
-   if (error) throw error;
-
-   svg.append("path")
-       .datum(topojson.feature(us, us.objects.land))
-       .attr("class", "land")
-       .attr("d", path);
-
-   svg.selectAll(".state")
-       .data(topojson.feature(us, us.objects.states).features)
-     .enter().append("path")
-       .attr("class", "state")
-       .attr("d", path)
-       .attr("transform", function(d) {
-         var centroid = path.centroid(d),
-             x = centroid[0],
-             y = centroid[1];
-         return "translate(" + x + "," + y + ")"
-             + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
-             + "translate(" + -x + "," + -y + ")";
-       })
-       .style("stroke-width", function(d) {
-         return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
-       });
-
- });
-
+ // console.log(state_map_array);
+ renderMap();
 })
+
+window.setInterval(renderMap, 500);
+
+function renderMap(){
+  var path = d3.geo.path();
+
+  var svg = d3.select("body").append("svg")
+      .attr("width", 960)
+      .attr("height", 500);
+
+  d3.json("/map", function(error, us) {
+    if (error) throw error;
+
+    svg.append("path")
+        .datum(topojson.feature(us, us.objects.land))
+        .attr("class", "land")
+        .attr("d", path);
+
+    svg.selectAll(".state")
+        .data(topojson.feature(us, us.objects.states).features)
+      .enter().append("path")
+        .attr("class", "state")
+        .attr("d", path)
+        .attr("transform", function(d) {
+          var centroid = path.centroid(d),
+              x = centroid[0],
+              y = centroid[1];
+          return "translate(" + x + "," + y + ")"
+              + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
+              + "translate(" + -x + "," + -y + ")";
+        })
+        .style("stroke-width", function(d) {
+          return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
+        });
+
+  });
+}

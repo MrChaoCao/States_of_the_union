@@ -22,9 +22,9 @@ app.get('/map', (req, res) => {
     return response.text();
   }).then(function(body) {
     results = JSON.parse(body)
-    console.log(typeof body);
-    console.log(body.length);
-    console.log(JSON.parse(body)[0]);
+    // console.log(typeof body);
+    // console.log(body.length);
+    // console.log(JSON.parse(body)[0]);
     res.send(results)
   });
 
@@ -78,17 +78,17 @@ io.sockets.on('connection', function (socket) {
                 }
               }
 
-              stream.on('limit', function(limitMessage) {
-                return console.log(limitMessage);
-              });
-
-              stream.on('warning', function(warning) {
-                return console.log(warning);
-              });
-
-              stream.on('disconnect', function(disconnectMessage) {
-                return console.log(disconnectMessage);
-              });
+              // stream.on('limit', function(limitMessage) {
+              //   return console.log(limitMessage);
+              // });
+              //
+              // stream.on('warning', function(warning) {
+              //   return console.log(warning);
+              // });
+              //
+              // stream.on('disconnect', function(disconnectMessage) {
+              //   return console.log(disconnectMessage);
+              // });
           });
       });
     }

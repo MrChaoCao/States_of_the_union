@@ -71,7 +71,7 @@ function initialize() {
     socket.on('twitter-stream', function (data) {
       tweet_count += 1
       state_map_array[states[data.state]] += 0.1
-      console.log(state_map_array);
+      // console.log(state_map_array);
     });
 
     // Listens for a success response from the server to
