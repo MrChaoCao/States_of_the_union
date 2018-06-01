@@ -70,10 +70,10 @@ io.sockets.on('connection', function (socket) {
 
                     // console.log(maybe_state, outputPoint.text, outputPoint.profile_pic);
                     // console.log(data.text)
-                    socket.broadcast.emit("twitter-stream", outputPoint);
+                    socket.broadcast.emit("twitter-states", outputPoint);
 
                     //Send out to web sockets channel.
-                    socket.emit('twitter-stream', outputPoint);
+                    socket.emit('twitter-states', outputPoint);
                   }
                 }
               }

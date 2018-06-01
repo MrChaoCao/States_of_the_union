@@ -34,7 +34,7 @@
 
 </head>
 
-<body onload="initialize()">
+<body>
 
 	<div class="tweet-container">
 	      <div id="tweet-stream">Now streaming:</div>
@@ -45,9 +45,8 @@
 	        var socket = io.connect('/');
 	          jQuery(function($) {
 	            var tweetContent = $('ul.tweets');
-	            socket.on('twitter-stream', function(data){
+	            socket.on('twitter-states', function(data){
 	              tweetContent.prepend('<li>' +
-									`<div>${tweet_count}</div>` +
 									`<div>${data.state}</div>` +
 									`<div>${state_map_array}</div>` +
 									'<div id="prof-info">' +
