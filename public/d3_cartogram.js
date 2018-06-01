@@ -2,7 +2,6 @@ var socket = io.connect('/');
 // This listens on the "twitter-steam" channel and data is
 // received everytime a new tweet is receieved.
 
-
 state_map_array =
 [
   NaN, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00,  NaN, 0.00, 0.00,
@@ -65,7 +64,7 @@ const states = new Object()
   states.WI = 55;
   states.WY = 56;
 
-socket.on('twitter-stream', function (data) {
+socket.on('twitter-states', function (data) {
   state_map_array[states[data.state]] += 0.01
 });
 
@@ -81,22 +80,45 @@ socket.on("connected", function(r) {
 
 // import {apiCall} from './twitter.js';
 document.addEventListener('DOMContentLoaded', () => {
- // Ratio of Obese (BMI >= 30) in U.S. Adults, CDC 2008
- // var valueById = [
- //   NaN, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00,  NaN, 0.00, 0.00,
- //   0.00,  NaN, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00, 0.00, 0.00,
- //   0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
- //   0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
- //   0.00, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
- //   0.00, 0.00,  NaN, 0.00, 0.00, 0.00, 0.00
- // ];
- // console.log(state_map_array);
- // var valueById = state_map_array
- // console.log(state_map_array);
  renderMap();
 })
 
-window.setInterval(renderMap, 500);
+window.setInterval(updateMap, 1000)
+window.setInterval(clearMap, 1000);
+
+function clearMap() {
+  d3.selectAll(".state").remove();
+}
+
+function updateMap(){
+  var path = d3.geo.path();
+
+  var svg = d3.select("svg").append("svg")
+    .attr("width", 960)
+    .attr("height", 500);
+
+  d3.json("/map", function(error, us) {
+    if (error) throw error;
+
+    svg.selectAll(".state")
+        .data(topojson.feature(us, us.objects.states).features)
+      .enter().append("path")
+        .attr("class", "state")
+        .attr("d", path)
+        .attr("transform", function(d) {
+          var centroid = path.centroid(d),
+              x = centroid[0],
+              y = centroid[1];
+          return "translate(" + x + "," + y + ")"
+              + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
+              + "translate(" + -x + "," + -y + ")";
+        })
+        .style("stroke-width", function(d) {
+          return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
+        });
+
+  });
+}
 
 function renderMap(){
   var path = d3.geo.path();
