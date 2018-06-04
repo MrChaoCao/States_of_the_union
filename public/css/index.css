@@ -1,0 +1,13 @@
+.body {
+  display: flex;
+}
+
+.tweet-container {
+  justify-content: flex-end;
+  float: none;
+  max-height: 200px;
+  background: red;
+}
+
+.svg {
+}

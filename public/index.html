@@ -5,7 +5,7 @@
 	<!-- Safe Software, 2013 -->
 	<!-- http://www.safe.com -->
 
-	<title>Twitter Streaming Using Node</title>
+	<title>States of the union</title>
 	<style>
 
 		.land {
@@ -19,6 +19,7 @@
 		}
 
 	</style>
+	<link rel="stylesheet" href="css/index.css">
 	<script src="../socket.io/socket.io.js"></script>
 	<!-- JQuery -->
 	<script src="/libs/jquery-1.10.1.js"></script>
@@ -48,7 +49,6 @@
 	            socket.on('twitter-states', function(data){
 	              tweetContent.prepend('<li>' +
 									`<div>${data.state}</div>` +
-									`<div>${state_map_array}</div>` +
 									'<div id="prof-info">' +
 			              `<img id="prof-pic" src="${data.profile_pic}"/>` + '</div>' +
 										'<div id="prof-names">' +
