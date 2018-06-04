@@ -3,11 +3,19 @@
 }
 
 .tweet-container {
-  justify-content: flex-end;
-  float: none;
-  max-height: 200px;
+  float: right;
+  max-height: 100%;
+  width: 400px;
+  overflow-x: auto;
+  overflow-y: auto;
   background: red;
 }
 
+.tweet {
+  background: white;
+}
+
 .svg {
+  display: flex;
+  justify-content: flex-start;
 }

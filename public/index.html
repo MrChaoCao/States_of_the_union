@@ -27,7 +27,6 @@
 	<!-- Generic server specific functions -->
 
 	<!-- Spatial Dashboard JavaScript -->
-	<script src="/js/twitterStream.js" type="text/javascript"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://d3js.org/topojson.v1.min.js"></script>
@@ -47,7 +46,7 @@
 	          jQuery(function($) {
 	            var tweetContent = $('ul.tweets');
 	            socket.on('twitter-states', function(data){
-	              tweetContent.prepend('<li>' +
+	              tweetContent.prepend('<li id=`tweet`>' +
 									`<div>${data.state}</div>` +
 									'<div id="prof-info">' +
 			              `<img id="prof-pic" src="${data.profile_pic}"/>` + '</div>' +
