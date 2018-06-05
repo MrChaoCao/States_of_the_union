@@ -2,7 +2,7 @@ var socket = io.connect('/');
 // This listens on the "twitter-steam" channel and data is
 // received everytime a new tweet is receieved.
 
-state_map_array =
+const state_map_array =
 [
   NaN, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00,  NaN, 0.00, 0.00,
   0.00,  NaN, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00, 0.00, 0.00,
@@ -66,6 +66,7 @@ const states = new Object()
 
 socket.on('twitter-states', function (data) {
   state_map_array[states[data.state]] += 0.01
+  renderStates()
 });
 
 // Listens for a success response from the server to
@@ -83,14 +84,15 @@ document.addEventListener('DOMContentLoaded', () => {
  renderMap();
 })
 
-window.setInterval(updateMap, 1000)
-window.setInterval(clearMap, 1000);
+// window.setInterval(renderStates, 1000);
+// window.setInterval(clearMap, 1000);
+// window.setInterval(renderStates, 1001);
 
 function clearMap() {
   d3.selectAll(".state").remove();
 }
 
-function updateMap(){
+function renderStates(){
   var path = d3.geo.path();
 
   var svg = d3.select("svg").append("svg")
@@ -115,7 +117,9 @@ function updateMap(){
         })
         .style("stroke-width", function(d) {
           return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
-        });
+        })
+        .transition().duration(1000)
+        ;
 
   });
 }
@@ -135,22 +139,22 @@ function renderMap(){
         .attr("class", "land")
         .attr("d", path);
 
-    svg.selectAll(".state")
-        .data(topojson.feature(us, us.objects.states).features)
-      .enter().append("path")
-        .attr("class", "state")
-        .attr("d", path)
-        .attr("transform", function(d) {
-          var centroid = path.centroid(d),
-              x = centroid[0],
-              y = centroid[1];
-          return "translate(" + x + "," + y + ")"
-              + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
-              + "translate(" + -x + "," + -y + ")";
-        })
-        .style("stroke-width", function(d) {
-          return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
-        });
+    // svg.selectAll(".state")
+    //     .data(topojson.feature(us, us.objects.states).features)
+    //   .enter().append("path")
+    //     .attr("class", "state")
+    //     .attr("d", path)
+    //     .attr("transform", function(d) {
+    //       var centroid = path.centroid(d),
+    //           x = centroid[0],
+    //           y = centroid[1];
+    //       return "translate(" + x + "," + y + ")"
+    //           + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
+    //           + "translate(" + -x + "," + -y + ")";
+    //     })
+    //     .style("stroke-width", function(d) {
+    //       return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
+    //     });
 
   });
 }
