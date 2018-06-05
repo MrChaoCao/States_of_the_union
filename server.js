@@ -37,6 +37,7 @@ const twit = new twitter({
   access_token_key: '963316414021906433-GThLLTdtdCJtjXFZz34tLc2mtq7Imis',
   access_token_secret: 'xutaud0IildZ0a6FJUNtg9JpnbBm8mYflhyi32frtXllJ'
 }),
+
 stream = null;
 
 //Use the default port (for beanstalk) or default to 8081 locally
@@ -94,6 +95,11 @@ io.sockets.on('connection', function (socket) {
     }
   });
 
+socket.on("end tweets", function(){
+  if (stream !== null){
+    stream = null;
+  }
+})
     // Emits signal to the client telling them that the
     // they are connected and can start receiving Tweets
     socket.emit("connected");
