@@ -19,3 +19,14 @@
   display: flex;
   justify-content: flex-start;
 }
+
+.land {
+  fill: #fff;
+  stroke: #ccc;
+}
+
+.state {
+  fill: #ccc;
+  stroke: #666;
+  opacity: 0.5;
+}
