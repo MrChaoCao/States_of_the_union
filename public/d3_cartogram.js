@@ -12,6 +12,16 @@ const state_map_array =
   0.00, 0.00,  NaN, 0.00, 0.00, 0.00, 0.00
 ];
 
+const colors = [
+  "red",
+  "orange",
+  "yellow",
+  "blue",
+  "green",
+  "indigo",
+  "violet",
+]
+
 const states = new Object()
   states.AL = 1;
   states.AK = 2;
@@ -65,7 +75,6 @@ const states = new Object()
   states.WY = 56;
 
 socket.on('twitter-states', function (data) {
-  console.log(data.state);
   state_map_array[states[data.state]] += 0.005
   clearMap()
   renderStates()
@@ -114,6 +123,7 @@ function renderStates(){
         .attr("class", "state")
         .attr("d", path)
         .attr("transform", function(d) {
+          console.log(state_map_array[d.id]);
           var centroid = path.centroid(d),
               x = centroid[0],
               y = centroid[1];
@@ -124,7 +134,7 @@ function renderStates(){
         .style("stroke-width", function(d) {
           return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
         })
-        .style("fill", "red");
+        .style("fill", function(d){return colors[d.id % 7]});
 
 }
 
