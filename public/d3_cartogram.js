@@ -65,7 +65,9 @@ const states = new Object()
   states.WY = 56;
 
 socket.on('twitter-states', function (data) {
-  state_map_array[states[data.state]] += 0.01
+  console.log(data.state);
+  state_map_array[states[data.state]] += 0.005
+  clearMap()
   renderStates()
 });
 
@@ -84,9 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
  renderMap();
 })
 
-// window.setInterval(renderStates, 1000);
-// window.setInterval(clearMap, 1000);
-// window.setInterval(renderStates, 1001);
+
+let us
+
+d3.json("/map", function(error, america){
+  if (error) throw error;
+   us = america
+})
+
+
+// window.setInterval(clearMap, 5000);
 
 function clearMap() {
   d3.selectAll(".state").remove();
@@ -98,9 +107,6 @@ function renderStates(){
   var svg = d3.select("svg").append("svg")
     .attr("width", 960)
     .attr("height", 500);
-
-  d3.json("/map", function(error, us) {
-    if (error) throw error;
 
     svg.selectAll(".state")
         .data(topojson.feature(us, us.objects.states).features)
@@ -118,10 +124,8 @@ function renderStates(){
         .style("stroke-width", function(d) {
           return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
         })
-        .transition().duration(1000)
-        ;
+        .style("fill", "red");
 
-  });
 }
 
 function renderMap(){
