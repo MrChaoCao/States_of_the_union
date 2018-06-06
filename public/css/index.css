@@ -8,11 +8,25 @@
   width: 400px;
   overflow-x: auto;
   overflow-y: auto;
-  background: red;
 }
 
-.tweet {
-  background: white;
+.tweets {
+  display: flex;
+}
+
+.tweets li {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.tweets:last-child{
+  border-top: 1px solid black;
+}
+
+.tweets img{
+  border-radius: 50%;
+  justify-content: flex-start;
 }
 
 .svg {

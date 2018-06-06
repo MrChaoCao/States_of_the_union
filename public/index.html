@@ -34,13 +34,13 @@
 	          jQuery(function($) {
 	            var tweetContent = $('ul.tweets');
 	            socket.on('twitter-states', function(data){
-	              tweetContent.prepend('<li id=`tweet`>' +
+	              tweetContent.prepend('<li className=`tweet`>' +
 									`<div>${data.state}</div>` +
 									'<div id="prof-info">' +
-			              `<img id="prof-pic" src="${data.profile_pic}"/>` + '</div>' +
-										'<div id="prof-names">' +
-				              '<div id="name">' + data.name + '</div>'+
-				              '<div id="screen_name">' + '@' + data.screen_name + '</div>' +
+			              `<img className="prof-pic" src="${data.profile_pic}"/>` + '</div>' +
+										'<div className="prof-names">' +
+				              '<div className="name">' + data.name + '</div>'+
+				              '<div className="screen_name">' + '@' + data.screen_name + '</div>' +
 									'</div>' +
 		              data.text
 								+ '</li>');
