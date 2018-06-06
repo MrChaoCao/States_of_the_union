@@ -89,42 +89,36 @@ socket.on("connected", function(r) {
   socket.emit("start tweets");
 });
 
-
 // import {apiCall} from './twitter.js';
 document.addEventListener('DOMContentLoaded', () => {
  renderMap();
 })
 
-
-let us
+let americaMap
 
 d3.json("/map", function(error, america){
   if (error) throw error;
-   us = america
+   americaMap = america
 })
-
-
-// window.setInterval(clearMap, 5000);
 
 function clearMap() {
   d3.selectAll(".state").remove();
 }
 
 function renderStates(){
-  var path = d3.geo.path();
+  let path = d3.geo.path();
 
-  var svg = d3.select("svg").append("svg")
+  let svg = d3.select("svg").append("svg")
     .attr("width", 960)
     .attr("height", 500);
 
     svg.selectAll(".state")
-        .data(topojson.feature(us, us.objects.states).features)
+        .data(topojson.feature(americaMap, americaMap.objects.states).features)
       .enter().append("path")
         .attr("class", "state")
         .attr("d", path)
         .attr("transform", function(d) {
-          console.log(state_map_array[d.id]);
-          var centroid = path.centroid(d),
+          let centroid = path.centroid(d),
               x = centroid[0],
               y = centroid[1];
           return "translate(" + x + "," + y + ")"
@@ -134,41 +128,24 @@ function renderStates(){
         .style("stroke-width", function(d) {
           return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
         })
-        .style("fill", function(d){return colors[d.id % 7]});
-
+        .style("fill", function(d){
+          return colors[d.id % 7]
+        });
 }
 
 function renderMap(){
-  var path = d3.geo.path();
+  let path = d3.geo.path();
 
-  var svg = d3.select("body").append("svg")
+  let svg = d3.select("body").append("svg")
       .attr("width", 960)
       .attr("height", 500);
 
-  d3.json("/map", function(error, us) {
+  d3.json("/map", function(error, americaMap) {
     if (error) throw error;
 
     svg.append("path")
-        .datum(topojson.feature(us, us.objects.land))
+        .datum(topojson.feature(americaMap, americaMap.objects.land))
         .attr("class", "land")
         .attr("d", path);
-
-    // svg.selectAll(".state")
-    //     .data(topojson.feature(us, us.objects.states).features)
-    //   .enter().append("path")
-    //     .attr("class", "state")
-    //     .attr("d", path)
-    //     .attr("transform", function(d) {
-    //       var centroid = path.centroid(d),
-    //           x = centroid[0],
-    //           y = centroid[1];
-    //       return "translate(" + x + "," + y + ")"
-    //           + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
-    //           + "translate(" + -x + "," + -y + ")";
-    //     })
-    //     .style("stroke-width", function(d) {
-    //       return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
-    //     });
-
   });
 }
