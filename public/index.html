@@ -45,18 +45,19 @@
 											'</div>' +
 										'</div>' +
 
+										`<div> ${data.text} </div>` +
+										`<div class="tweet-time">${data.created_at}</div>` +
+
 										`<div class="tweet-info">` +
-											`<div>${data.created_at}</div>` +
 											`<div>${data.retweet_count}</div>` +
 											`<div>${data.favorite_count}</div>` +
 											`<div>${data.reply_count}</div>` +
-										`</div>`
+										`</div>` +
 
 										`<div>${data.state}</div>` +
 										'</div>' +
 
-										`<div> ${data.text} </div>`
-								+ '</li>');
+									'</li>');
 
 	          });
 
