@@ -55,7 +55,7 @@ io.sockets.on('connection', function (socket) {
               "hashtags": data.entities.hashtags,
               "profile_pic": data.user.profile_image_url_https,
               "created_at": data.created_at,
-              "tweet_url" `https://twitter.com/${data.user}/status/${data.id}`,
+              "tweet_url": `https://twitter.com/${data.user}/status/${data.id}`,
               "retweet_count": data.retweet_count,
               "favorite_count": data.favorite_count,
               "reply_count": data.reply_count,
