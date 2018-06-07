@@ -12,12 +12,37 @@
 
 .tweets {
   display: flex;
+  flex-direction: column;
 }
 
 .tweets li {
   border-right: 1px solid black;
   border-left: 1px solid black;
   border-bottom: 1px solid black;
+}
+
+.prof-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-bottom: 10px;
+}
+
+.real_name {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.screen_name {
+  font-size: 14px;
+  font-weight: 300px;
+  font-style: italic;
+  color: #657786;
 }
 
 .tweets:last-child{

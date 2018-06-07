@@ -7,6 +7,7 @@
 
 	<title>States of the union</title>
 
+	<style src="../css/reset.css"></style>
 	<link rel="stylesheet" href="css/index.css">
 	<script src="../socket.io/socket.io.js"></script>
 	<!-- JQuery -->
@@ -19,13 +20,12 @@
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://d3js.org/topojson.v1.min.js"></script>
   <script type="text/javascript" src="./d3_cartogram.js"></script>
-
 </head>
 
 <body>
 
 	<div class="tweet-container">
-	      <div id="tweet-stream">Now streaming:</div>
+	      <div class="tweet-stream">Now streaming:</div>
 	      <ul class="tweets">
 	        <script>
 
@@ -34,15 +34,20 @@
 	          jQuery(function($) {
 	            var tweetContent = $('ul.tweets');
 	            socket.on('twitter-states', function(data){
-	              tweetContent.prepend('<li className=`tweet`>' +
-									`<div>${data.state}</div>` +
-									'<div id="prof-info">' +
-			              `<img className="prof-pic" src="${data.profile_pic}"/>` + '</div>' +
-										'<div className="prof-names">' +
-				              '<div className="name">' + data.name + '</div>'+
-				              '<div className="screen_name">' + '@' + data.screen_name + '</div>' +
-									'</div>' +
-		              data.text
+	              tweetContent.prepend(
+									'<li class=`tweet`>' +
+
+										'<div class="prof-info">' +
+				              `<img class="prof-pic" src="${data.profile_pic}"/>` +
+											'<div class="name">' +
+												'<div class="real_name">' + data.name + '</div>' +
+												`<div class="screen_name"> @${data.screen_name} </div>` +
+											'</div>' +
+										'</div>' +
+										`<div>${data.state}</div>` +
+										'</div>' +
+
+										`<div> ${data.text} </div>`
 								+ '</li>');
 
 	          });
