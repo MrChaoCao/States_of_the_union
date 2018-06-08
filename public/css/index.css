@@ -2,6 +2,12 @@
   display: flex;
 }
 
+.americaMap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .tweet-container {
   float: right;
   max-height: 100vh;
@@ -13,12 +19,14 @@
 .tweets {
   display: flex;
   flex-direction: column;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 .tweets li {
-  border-right: 1px solid black;
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #E7ECF0;
+  padding: 15px;
 }
 
 .prof-info {
@@ -30,12 +38,13 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding-left: 15px;
   padding-bottom: 10px;
 }
 
 .real_name {
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 550;
 }
 
 .screen_name {
@@ -51,6 +60,7 @@
 
 .tweets img{
   border-radius: 50%;
+  max-height: 48px;
   justify-content: flex-start;
 }
 
@@ -61,15 +71,21 @@
   color: #657786;
 }
 
+.tweet-text {
+  padding: 10px 0px;
+}
+
 .tweet-info {
   display: flex;
   justify-content: space-around;
   color: #657786;
 }
 
-.svg {
-  display: flex;
-  justify-content: flex-start;
+.tweet-from {
+  font-size: 14px;
+  font-weight: 300px;
+  font-style: italic;
+  color: #657786;
 }
 
 .land {
@@ -79,5 +95,5 @@
 
 .state {
   stroke: #666;
-  opacity: 0.5;
+  opacity: 0.6;
 }
