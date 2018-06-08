@@ -2,6 +2,8 @@ var socket = io.connect('/');
 // This listens on the "twitter-steam" channel and data is
 // received everytime a new tweet is receieved.
 
+let tweet_count = 0
+
 const state_map_array =
 [
   NaN, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00,  NaN, 0.00, 0.00,
@@ -75,6 +77,7 @@ const states = new Object()
   states.WY = 56;
 
 socket.on('twitter-states', function (data) {
+  tweet_count += 1
   state_map_array[states[data.state]] += 0.005
   clearMap()
   renderStates()
@@ -136,7 +139,7 @@ function renderStates(){
 function renderMap(){
   let path = d3.geo.path();
 
-  let svg = d3.select("body").append("svg")
+  let svg = d3.select("mapright").append("svg")
       .attr("width", 960)
       .attr("height", 500)
       .attr("class", "america-map");

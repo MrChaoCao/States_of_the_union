@@ -20,45 +20,43 @@
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://d3js.org/topojson.v1.min.js"></script>
   <script type="text/javascript" src="./d3_cartogram.js"></script>
+	<script> document.createElement("mapright"); </script>
+
 </head>
 
 <body>
+	<div class="page-left">
+		<div class="tweet-container">
+			Twitter feed:
+			<ul class="tweets">
+				<script>
+				var socket = io.connect('/');
+				jQuery(function($) {
+					var tweetContent = $('ul.tweets');
+					socket.on('twitter-states', function(data){
+						tweetContent.prepend(
+							'<li class=`tweet`>' +
+								'<div class="prof-info">' +
+									`<img class="prof-pic" src="${data.profile_pic}"/>` +
 
-	<div class="tweet-container">
-	      <div class="tweet-stream">Now streaming:</div>
-	      <ul class="tweets">
-	        <script>
+									'<div class="name">' +
+										'<div class="real_name">' + data.name + '</div>' +
+										`<div class="screen_name"> @${data.screen_name} </div>` +
+									'</div>' +
+								'</div>' +
 
-	        // var socket = io.connect('https://localhost:8000');
-	        var socket = io.connect('/');
-	          jQuery(function($) {
-	            var tweetContent = $('ul.tweets');
-	            socket.on('twitter-states', function(data){
-	              tweetContent.prepend(
-									'<li class=`tweet`>' +
-
-										'<div class="prof-info">' +
-				              `<img class="prof-pic" src="${data.profile_pic}"/>` +
-											'<div class="name">' +
-												'<div class="real_name">' + data.name + '</div>' +
-												`<div class="screen_name"> @${data.screen_name} </div>` +
-											'</div>' +
-										'</div>' +
-
-										`<div class="tweet-text"> ${data.text} </div>` +
-										`<div class="tweet-time">${data.created_at}</div>` +
-
-										`<div class="tweet-from"> Tweeted from: ${data.place_name}</div>` +
-										'</div>' +
-
-									'</li>'
-								);
-		          });
-		        });
-	        </script>
-	        </ul>
-	      </div>
-	    </div>
-
+								`<div class="tweet-text"> ${data.text} </div>` +
+								`<div class="tweet-time">${data.created_at}</div>` +
+								`<div class="tweet-from"> Tweeted from: ${data.place_name}</div>` +
+								'</div>' +
+							'</li>'
+						);
+					});
+				});
+				</script>
+			</ul>
+		</div>
+	</div>
+	<mapright></mapright>
 </body>
 </html>
