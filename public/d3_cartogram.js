@@ -138,7 +138,8 @@ function renderMap(){
 
   let svg = d3.select("body").append("svg")
       .attr("width", 960)
-      .attr("height", 500);
+      .attr("height", 500)
+      .attr("class", "america-map");
 
   d3.json("/map", function(error, americaMap) {
     if (error) throw error;

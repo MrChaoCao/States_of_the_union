@@ -49,6 +49,7 @@ io.sockets.on('connection', function (socket) {
             const maybe_state = data.place.full_name.split(", ")[1]
             const tweetInfo = {
               "state": maybe_state,
+              "place_name": data.place.full_name,
               "screen_name": data.user.screen_name,
               "name": data.user.name,
               "text": data.text,
