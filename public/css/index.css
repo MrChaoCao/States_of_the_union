@@ -1,5 +1,6 @@
-.body {
+.vsc-initialized {
   display: flex;
+  align-items: center;
 }
 
 .americaMap {
@@ -9,7 +10,6 @@
 }
 
 .tweet-container {
-  float: right;
   max-height: 100vh;
   width: 400px;
   overflow-x: auto;
