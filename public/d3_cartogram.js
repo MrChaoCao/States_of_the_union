@@ -97,11 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
  renderMap();
 })
 
-let americaMap
+let countryMap
 
 d3.json("/map", function(error, america){
   if (error) throw error;
-   americaMap = america
+   countryMap = america
 })
 
 function clearMap() {
@@ -112,11 +112,9 @@ function renderStates(){
   let path = d3.geo.path();
 
   let svg = d3.select("svg").append("svg")
-    .attr("width", 960)
-    .attr("height", 500);
 
     svg.selectAll(".state")
-        .data(topojson.feature(americaMap, americaMap.objects.states).features)
+        .data(topojson.feature(countryMap, countryMap.objects.states).features)
       .enter().append("path")
         .attr("class", "state")
         .attr("d", path)
@@ -139,16 +137,16 @@ function renderStates(){
 function renderMap(){
   let path = d3.geo.path();
 
-  let svg = d3.select("mapright").append("svg")
+  let svg = d3.select(".page-right").append("svg")
       .attr("width", 960)
       .attr("height", 500)
-      .attr("class", "america-map");
+      .attr("class", "map-box");
 
-  d3.json("/map", function(error, americaMap) {
+  d3.json("/map", function(error, countryMap) {
     if (error) throw error;
 
     svg.append("path")
-        .datum(topojson.feature(americaMap, americaMap.objects.land))
+        .datum(topojson.feature(countryMap, countryMap.objects.land))
         .attr("class", "land")
         .attr("d", path);
   });
