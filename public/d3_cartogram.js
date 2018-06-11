@@ -137,7 +137,7 @@ function renderStates(){
 function renderMap(){
   let path = d3.geo.path();
 
-  let svg = d3.select(".page-right").append("svg")
+  let svg = d3.select(".map-div").append("svg")
       .attr("width", 960)
       .attr("height", 500)
       .attr("class", "map-box");
