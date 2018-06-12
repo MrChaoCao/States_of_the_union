@@ -113,25 +113,27 @@ function renderStates(){
 
   let svg = d3.select("svg").append("svg")
 
+  if (svg){
     svg.selectAll(".state")
-        .data(topojson.feature(countryMap, countryMap.objects.states).features)
-      .enter().append("path")
-        .attr("class", "state")
-        .attr("d", path)
-        .attr("transform", function(d) {
-          let centroid = path.centroid(d),
-              x = centroid[0],
-              y = centroid[1];
-          return "translate(" + x + "," + y + ")"
-              + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
-              + "translate(" + -x + "," + -y + ")";
-        })
-        .style("stroke-width", function(d) {
-          return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
-        })
-        .style("fill", function(d){
-          return colors[d.id % 7]
-        });
+    .data(topojson.feature(countryMap, countryMap.objects.states).features)
+    .enter().append("path")
+    .attr("class", "state")
+    .attr("d", path)
+    .attr("transform", function(d) {
+      let centroid = path.centroid(d),
+      x = centroid[0],
+      y = centroid[1];
+      return "translate(" + x + "," + y + ")"
+      + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
+      + "translate(" + -x + "," + -y + ")";
+    })
+    .style("stroke-width", function(d) {
+      return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
+    })
+    .style("fill", function(d){
+      return colors[d.id % 7]
+    });
+  }
 }
 
 function renderMap(){
