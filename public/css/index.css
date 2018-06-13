@@ -43,18 +43,18 @@
 .tweet-header {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
-.tweet-header a {
-  justify-content: flex-end;
+.profile-info {
+  display: flex;
+  justify-content: space-around;
 }
 
 .name {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
   padding-left: 15px;
   padding-bottom: 10px;
+  flex-direction: column;
 }
 
 .real_name {

@@ -36,11 +36,14 @@
 						tweetContent.prepend(
 							'<li class=`tweet`>' +
 								'<div class="tweet-header">' +
-									`<img class="prof-pic" src="${data.profile_pic}"/>` +
 
-									'<div class="name">' +
-										'<div class="real_name">' + data.name + '</div>' +
-										`<div class="screen_name"> @${data.screen_name} </div>` +
+									'<div class="profile-info">' +
+										`<img class="prof-pic" src="${data.profile_pic}"/>` +
+										`<div class="name">` +
+											'<div class="real_name">' + data.name + '</div>' +
+											`<div class="screen_name"> @${data.screen_name} </div>` +
+										`</div>` +
+
 									'</div>' +
 
 									`<a href="${data.tweet_url}" target="_blank"> Link </a>` +
