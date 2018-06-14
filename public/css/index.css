@@ -1,6 +1,6 @@
 .vsc-initialized {
   display: flex;
-  align-items: center;
+  background: linear-gradient(to right, white, #46A1EB);
 }
 
 .page-left {
@@ -8,6 +8,7 @@
 }
 
 .page-right {
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,6 +18,18 @@
 .page-right p {
   display: flex;
   justify-content: center;
+}
+
+.title {
+  order: -1;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.description {
+  order: 1;
+  font-size: 22px;
+  width: 70vh;
 }
 
 .tweet-container {
