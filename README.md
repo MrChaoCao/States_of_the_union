@@ -4,7 +4,7 @@ A data visualization that shows the frequency twitter users in different states 
 [Link to live site](https://twitter-states.herokuapp.com/)
 
 # Technologies
-This app was created with Node.js and utilizes websockets and the Twitter API to stream tweets in real time and D3.js display tweet counts as a non contiguous cartogram.
+This app was created with Node.js and utilizes websockets and the Twitter API to stream tweets in real time. The D3.js library is used to render tweet counts as a non contiguous cartogram.
 
 The Twitter stream API endpoint was used for this project. It gives access to up to
 
