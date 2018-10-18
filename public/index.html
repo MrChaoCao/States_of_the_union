@@ -33,7 +33,7 @@
 				var socket = io.connect('/');
 				jQuery(function($) {
 					var tweetContent = $('ul.tweets');
-					socket.on('twitter-states', function(data){
+					socket.on('twitter-states', (data) => {
 						tweetContent.prepend(
 							'<li class=`tweet`>' +
 								'<div class="tweet-header">' +

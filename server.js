@@ -1,4 +1,3 @@
-//Setup web server and socket
 const twitter = require('twitter'),
     express = require('express'),
     app = express(),
@@ -19,14 +18,13 @@ app.get('/', (req, res) => {
 app.get('/map', (req, res) => {
   let results
   fetch('http://bl.ocks.org/mbostock/raw/4090846/us.json')
-  .then( (response) => response.text() )
-  .then( (body) => {
-    results = JSON.parse(body)
-    res.send(results)
-  });
+    .then( (response) => response.text() )
+      .then( (body) => {
+        results = JSON.parse(body)
+        res.send(results)
+      });
 })
 
-//Setup twitter stream api
 const twitterConnection = new twitter({
   consumer_key: secrets.twitterSecrets.consumer_key,
   consumer_secret: secrets.twitterSecrets.consumer_secret,
@@ -38,14 +36,13 @@ let twitterStream = null;
 
 server.listen(process.env.PORT || 8081);
 
-//Create web sockets connection.
-io.sockets.on('connection', function (socket) {
-  socket.on("start tweets", function() {
+io.sockets.on('connection', (socket) => {
+  socket.on("start tweets", () => {
     if(twitterStream === null) {
       twitterConnection.stream(
-      'statuses/filter', {'locations':'-180,-90,180,90'}, function(twitterStream) {
+      'statuses/filter', {'locations':'-180,-90,180,90'}, (twitterStream) => {
 
-        twitterStream.on('data', function(data) {
+        twitterStream.on('data', (data) => {
           if (data.place && data.place.country_code == 'US'){
             const maybe_state = data.place.full_name.split(", ")[1]
             const tweetInfo = {
@@ -60,22 +57,12 @@ io.sockets.on('connection', function (socket) {
               "tweet_url": `https://twitter.com/${data.user.screen_name}/status/${data.id_str}`,
             }
 
-            socket.broadcast.emit("twitter-states", tweetInfo);
-            //Send out to web sockets channel.
-            socket.emit('twitter-states', tweetInfo);
+            io.sockets.emit('twitter-states', tweetInfo);
           }
-
         });
       });
     }
   });
 
-socket.on("end tweets", function(){
-  if (twitterStream !== null){
-    twitterStream = null;
-  }
-})
-    // Emits signal to the client telling them that the
-    // they are connected and can start receiving Tweets
     socket.emit("connected");
 });

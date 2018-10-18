@@ -76,28 +76,23 @@ const states = new Object()
   states.WI = 55;
   states.WY = 56;
 
-socket.on('twitter-states', function (data) {
-  tweet_count += 1
-  state_map_array[states[data.state]] += 0.005
-  clearMap()
-  renderStates()
+socket.on('twitter-states', (data) => {
+  tweet_count += 1;
+  state_map_array[states[data.state]] += 0.005;
+  clearMap();
+  renderStates();
 });
 
-// Listens for a success response from the server to
-// say the connection was successful.
-socket.on("connected", function(r) {
 
-  //Now that we are connected to the server let's tell
-  //the server we are ready to start receiving tweets.
+socket.on("connected", (r) => {
   socket.emit("start tweets");
 });
 
-// import {apiCall} from './twitter.js';
 document.addEventListener('DOMContentLoaded', () => {
  renderMap();
 })
 
-let countryMap
+let countryMap;
 
 d3.json("/map", function(error, america){
   if (error) throw error;
@@ -138,15 +133,12 @@ function renderStates(){
 
 function renderMap(){
   let path = d3.geo.path();
-
   let svg = d3.select(".map-div").append("svg")
       .attr("width", 960)
       .attr("height", 500)
       .attr("class", "map-box");
-
   d3.json("/map", function(error, countryMap) {
     if (error) throw error;
-
     svg.append("path")
         .datum(topojson.feature(countryMap, countryMap.objects.land))
         .attr("class", "land")
