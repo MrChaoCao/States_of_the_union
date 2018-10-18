@@ -8,6 +8,8 @@ const twitter = require('twitter'),
     path = require('path');
     fetch = require('node-fetch');
 
+const secrets = require('./secrets');
+
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
@@ -27,10 +29,10 @@ app.get('/map', (req, res) => {
 
 //Setup twitter stream api
 const twitterConnection = new twitter({
-  consumer_key: 'q6kzEP9qMkVrM66ujiR1UK5ga',
-  consumer_secret: 'g2UxKFwIU9zn6m7UUde5gQ5MZYwYL4gIGYzncfRHW2QHAehrJi',
-  access_token_key: '963316414021906433-GThLLTdtdCJtjXFZz34tLc2mtq7Imis',
-  access_token_secret: 'xutaud0IildZ0a6FJUNtg9JpnbBm8mYflhyi32frtXllJ'
+  consumer_key: secrets.twitterSecrets.consumer_key,
+  consumer_secret: secrets.twitterSecrets.consumer_secret,
+  access_token_key: secrets.twitterSecrets.access_token_key,
+  access_token_secret: secrets.twitterSecrets.access_token_secret
 }),
 
 stream = null;
