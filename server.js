@@ -19,9 +19,8 @@ app.get('/', (req, res) => {
 app.get('/map', (req, res) => {
   let results
   fetch('http://bl.ocks.org/mbostock/raw/4090846/us.json')
-  .then(function(response) {
-    return response.text();
-  }).then(function(body) {
+  .then( (response) => response.text() )
+  .then( (body) => {
     results = JSON.parse(body)
     res.send(results)
   });
@@ -33,20 +32,20 @@ const twitterConnection = new twitter({
   consumer_secret: secrets.twitterSecrets.consumer_secret,
   access_token_key: secrets.twitterSecrets.access_token_key,
   access_token_secret: secrets.twitterSecrets.access_token_secret
-}),
+})
 
-stream = null;
+let twitterStream = null;
 
 server.listen(process.env.PORT || 8081);
 
 //Create web sockets connection.
 io.sockets.on('connection', function (socket) {
   socket.on("start tweets", function() {
-    if(stream === null) {
+    if(twitterStream === null) {
       twitterConnection.stream(
-      'statuses/filter', {'locations':'-180,-90,180,90'}, function(stream) {
+      'statuses/filter', {'locations':'-180,-90,180,90'}, function(twitterStream) {
 
-        stream.on('data', function(data) {
+        twitterStream.on('data', function(data) {
           if (data.place && data.place.country_code == 'US'){
             const maybe_state = data.place.full_name.split(", ")[1]
             const tweetInfo = {
@@ -72,8 +71,8 @@ io.sockets.on('connection', function (socket) {
   });
 
 socket.on("end tweets", function(){
-  if (stream !== null){
-    stream = null;
+  if (twitterStream !== null){
+    twitterStream = null;
   }
 })
     // Emits signal to the client telling them that the
