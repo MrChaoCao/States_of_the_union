@@ -1,8 +1,4 @@
-var socket = io.connect('/');
-// This listens on the "twitter-steam" channel and data is
-// received everytime a new tweet is receieved.
-
-let tweet_count = 0
+const mapSocket = io.connect('/');
 
 const state_map_array =
 [
@@ -76,28 +72,25 @@ const states = new Object()
   states.WI = 55;
   states.WY = 56;
 
-socket.on('twitter-states', (data) => {
-  tweet_count += 1;
-  state_map_array[states[data.state]] += 0.005;
-  clearMap();
-  renderStates();
-});
-
-
-socket.on("connected", (r) => {
-  socket.emit("start tweets");
-});
+let countryMap;
+d3.json("/map", function(error, america){
+  countryMap = america
+})
 
 document.addEventListener('DOMContentLoaded', () => {
- renderMap();
-})
+  renderMap();
+});
 
-let countryMap;
+mapSocket.on('stateMap', (arr) => {
+  console.log(arr);
+});
+mapSocket.on('tweetBody', (tweet) => {
 
-d3.json("/map", function(error, america){
-  if (error) throw error;
-   countryMap = america
-})
+  // console.log(tweet.state);
+  // state_map_array[states[tweet.state]] += 0.005;
+  // clearMap();
+  // renderStates();
+});
 
 function clearMap() {
   d3.selectAll(".state").remove();
@@ -105,28 +98,32 @@ function clearMap() {
 
 function renderStates(){
   let path = d3.geo.path();
-
   let svg = d3.select("svg").append("svg")
 
   if (svg){
     svg.selectAll(".state")
-    .data(topojson.feature(countryMap, countryMap.objects.states).features)
-    .enter().append("path")
-    .attr("class", "state")
-    .attr("d", path)
-    .attr("transform", function(d) {
-      let centroid = path.centroid(d),
-      x = centroid[0],
-      y = centroid[1];
-      return "translate(" + x + "," + y + ")"
-      + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
-      + "translate(" + -x + "," + -y + ")";
-    })
-    .style("stroke-width", function(d) {
-      return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
-    })
-    .style("fill", function(d){
-      return colors[d.id % 7]
+      .data(topojson.feature(countryMap, countryMap.objects.states).features)
+      .enter().append("path")
+      .attr("class", "state")
+      .attr("d", path)
+      .attr("transform", function(d) {
+        let centroid = path.centroid(d),
+        x = centroid[0],
+        y = centroid[1];
+        if (x && y){
+          return "translate(" + x + "," + y + ")"
+            + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
+            + "translate(" + -x + "," + -y + ")";
+        }
+        // return `translate(${x, y})"`
+        // + `scale(${Math.sqrt(state_map_array[d.id] * 5 || 0)})`
+        // + `translate(${-x, -y})`
+      })
+      .style("stroke-width", function(d) {
+        return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
+      })
+      .style("fill", function(d){
+        return colors[d.id % 7]
     });
   }
 }
@@ -136,7 +133,6 @@ function renderMap(){
   let svg = d3.select(".map-div").append("svg")
       .attr("width", 960)
       .attr("height", 500)
-      .attr("class", "map-box");
   d3.json("/map", function(error, countryMap) {
     if (error) throw error;
     svg.append("path")

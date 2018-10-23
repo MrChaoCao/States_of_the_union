@@ -1,4 +1,4 @@
-export const state_map_array =
+const state_map_array =
 [
   NaN, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00,  NaN, 0.00, 0.00,
   0.00,  NaN, 0.00, 0.00,  NaN, 0.00, 0.00, 0.00, 0.00, 0.00,
@@ -8,7 +8,7 @@ export const state_map_array =
   0.00, 0.00,  NaN, 0.00, 0.00, 0.00, 0.00
 ];
 
-export const states = new Object()
+const states = new Object()
   states.AL = 1;
   states.AK = 2;
   states.AZ = 4;
@@ -59,3 +59,8 @@ export const states = new Object()
   states.WV = 54;
   states.WI = 55;
   states.WY = 56;
+
+module.exports = {
+  state_map_array,
+  states
+}
