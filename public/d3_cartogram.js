@@ -86,10 +86,10 @@ mapSocket.on('stateMap', (arr) => {
 });
 mapSocket.on('tweetBody', (tweet) => {
 
-  // console.log(tweet.state);
-  // state_map_array[states[tweet.state]] += 0.005;
-  // clearMap();
-  // renderStates();
+  console.log(tweet.state);
+  state_map_array[states[tweet.state]] += 0.005;
+  clearMap();
+  renderStates();
 });
 
 function clearMap() {
@@ -98,26 +98,27 @@ function clearMap() {
 
 function renderStates(){
   let path = d3.geo.path();
-  let svg = d3.select("svg").append("svg")
+  let svg = d3.select("svg")
 
-  if (svg){
+  if (countryMap){
     svg.selectAll(".state")
       .data(topojson.feature(countryMap, countryMap.objects.states).features)
       .enter().append("path")
       .attr("class", "state")
       .attr("d", path)
       .attr("transform", function(d) {
-        let centroid = path.centroid(d),
-        x = centroid[0],
-        y = centroid[1];
+        let centroid = path.centroid(d);
+        let x = centroid[0];
+        let y = centroid[1];
+
         if (x && y){
           return "translate(" + x + "," + y + ")"
             + "scale(" + Math.sqrt(state_map_array[d.id] * 5 || 0) + ")"
             + "translate(" + -x + "," + -y + ")";
+          // return `translate(${x}, ${y})"`
+          // + `scale(${Math.sqrt(state_map_array[d.id] * 5 || 0)})`
+          // + `translate(${-x}, ${-y})`
         }
-        // return `translate(${x, y})"`
-        // + `scale(${Math.sqrt(state_map_array[d.id] * 5 || 0)})`
-        // + `translate(${-x, -y})`
       })
       .style("stroke-width", function(d) {
         return 1 / Math.sqrt(state_map_array[d.id] * 5 || 1);
