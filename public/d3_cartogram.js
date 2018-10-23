@@ -81,12 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderMap();
 });
 
-mapSocket.on('stateMap', (arr) => {
-  console.log(arr);
-});
 mapSocket.on('tweetBody', (tweet) => {
-
-  console.log(tweet.state);
   state_map_array[states[tweet.state]] += 0.005;
   clearMap();
   renderStates();

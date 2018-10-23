@@ -19,13 +19,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/map', (req, res) => {
-  let results
-  fetch('http://bl.ocks.org/mbostock/raw/4090846/us.json')
-    .then( (response) => response.text() )
-      .then( (body) => {
-        results = JSON.parse(body)
-        res.send(results)
-      });
+  res.sendFile(path.join(__dirname, './public/cartogramJSON.json'))
 })
 
 const twitterConnection = new twitter({
@@ -34,8 +28,6 @@ const twitterConnection = new twitter({
   access_token_key: secrets.twitterSecrets.access_token_key,
   access_token_secret: secrets.twitterSecrets.access_token_secret
 })
-// console.log(io.sockets);
-
 
 io.on('connection', (socket) => {
   console.log('connection');
